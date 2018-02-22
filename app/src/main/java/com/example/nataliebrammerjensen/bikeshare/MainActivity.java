@@ -33,6 +33,10 @@ public class MainActivity extends Activity { // GUI variables
     //Go to other activity
     public Button GoToStart;
     public Button GoToEnd;
+    public Button showListOfRides;
+
+    public ArrayAdapter buckysAdapter;
+    final ArrayList<String> rideListStrings= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +69,31 @@ public class MainActivity extends Activity { // GUI variables
 //            }
 //        });
 
+        showListOfRides = (Button) findViewById(R.id.list_rides_button);
+        showListOfRides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                populateLIstView();
+            }
+        });
+
         initStart();
         initEnd();
-        populateLIstView();
     }
+
+    //Hjælp fra malik
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) // Intent kommer fra StartRideActivity
+    {
+        // executed when start ride activity finishes
+        // gets the added ride and adds it to the list and notifies the adapter to display it
+        if(requestCode == 1000 && resultCode==RESULT_OK) // 1000 is an ID number to differ them from each other.
+        {
+            rideListStrings.add(data.getData().toString());
+            buckysAdapter.notifyDataSetChanged();
+        }
+    }
+
     private void updateUI(){
         lastAdded.setText(last.toString());
     }
@@ -79,7 +104,10 @@ public class MainActivity extends Activity { // GUI variables
             @Override
             public void onClick(View v) {
                 Intent toy = new Intent(MainActivity.this, StartRideActivity.class);
-                startActivity(toy);
+//                startActivity(toy);
+                //HFM
+                toy.putStringArrayListExtra("rides", rideListStrings);
+                startActivityForResult(toy,1000);
             }
         });
     }
@@ -90,7 +118,10 @@ public class MainActivity extends Activity { // GUI variables
             @Override
             public void onClick(View v) {
                 Intent toy = new Intent(MainActivity.this, EndRideActivity.class);
-                startActivity(toy);
+//                startActivity(toy);
+                //HFM
+                toy.putStringArrayListExtra("rides", rideListStrings);
+                startActivityForResult(toy,1000);
             }
         });
     }
@@ -98,13 +129,13 @@ public class MainActivity extends Activity { // GUI variables
     public void populateLIstView(){
         rdb = RidesDB.get(getApplicationContext());
         List<Ride> rides = rdb.getRidesDB();
-        List<String> rideListStrings = new ArrayList<>();
+//        List<String> rideListStrings = new ArrayList<>();
         for (Ride r: rides) {
             rideListStrings.add(r.toString());
             System.out.println(r.toString());
         }
 
-        ListAdapter buckysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideListStrings);
+        buckysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideListStrings);
         ListView buckysListView = findViewById(R.id.listView);
         buckysListView.setAdapter(buckysAdapter);
     }

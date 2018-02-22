@@ -1,42 +1,50 @@
 package com.example.nataliebrammerjensen.bikeshare;
 
-import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
- * Created by nataliebrammerjensen on 08/02/2018.
+ * Created by nataliebrammerjensen on 21/02/2018.
  */
 
-//Here is a skeleton for the BikeShareActivity.java:
-public class EndRideActivity extends Activity{ // GUI variables
+public class StartFragment extends Fragment {
     private Button addRide;
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
     private Ride last= new Ride("", "");
 
-    //tags
-    private static final String EXTRA_RIDES_DB = "com.bignerdranch.android.geoquiz.rides_DB";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout. activity_bike_share);
+    }
 
-        lastAdded = (TextView) findViewById(R.id.last_added);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_start, container, false);
+
+        lastAdded = (TextView) v.findViewById(R.id.last_added);
         updateUI();
 
         // Button
-        addRide = (Button) findViewById(R.id.add_button);
+        addRide = (Button) v.findViewById(R.id.add_button);
 
         // Texts
-        newWhat = (TextView) findViewById(R.id.what_text);
-        newWhere =(TextView) findViewById(R.id.where_edit);
+        newWhat = (TextView) v.findViewById(R.id.what_text);
+        newWhere =(TextView) v.findViewById(R.id.where_edit);
 
         // view products click event
         addRide.setOnClickListener(new View.OnClickListener() {
@@ -49,24 +57,23 @@ public class EndRideActivity extends Activity{ // GUI variables
                     //HFM
                     Intent data=new Intent();
                     data.setData(Uri.parse(last.toString()));
-                    setResult(RESULT_OK, data);
+                    getActivity().setResult(RESULT_OK, data);
 
                     // reset text fields
-                    newWhat.setText(""); newWhere.setText(""); updateUI();
+                    newWhat.setText(""); newWhere.setText("");
+                    updateUI();
 
                     //HFM
-                    finish();
+                    getActivity().finish();
                 }
             }
         });
+
+        return v;
     }
+
     private void updateUI(){
         lastAdded.setText(last.toString());
     }
 
-//    private void setAnswerShownResult(RidesDB currentInstanceOfRidesDB) {
-//        Intent data = new Intent();
-//        data.putExtra(EXTRA_RIDES_DB, currentInstanceOfRidesDB);
-//        setResult(RESULT_OK, data);
-//    }
 }

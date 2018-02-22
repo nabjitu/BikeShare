@@ -22,12 +22,12 @@
             android:id="@+id/go_to_start_button"
             android:layout_width="200dp"
             android:layout_height="80dp"
-            android:layout_gravity = "center"
-            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
             android:background="@android:color/holo_red_dark"
             android:padding="24dp"
-            android:text="Add ride" />
+            android:text="Add ride"/>
 
         <Button
             android:id="@+id/go_to_end_button"
@@ -40,9 +40,20 @@
             android:padding="24dp"
             android:text="End ride" />
 
+        <Button
+            android:id="@+id/list_rides_button"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_gravity = "center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@android:color/holo_red_dark"
+            android:padding="24dp"
+            android:text="List rides" />
+
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="444dp"
+            android:layout_height="match_parent"
             android:id="@+id/listView"/>
     </LinearLayout>
 
