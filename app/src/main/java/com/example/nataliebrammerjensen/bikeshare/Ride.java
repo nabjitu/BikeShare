@@ -11,10 +11,10 @@ public class Ride {
     private String mstartRide;
     private String mstopRide;
 
-    public Ride(String name, String start) {
-        mbikeName = name;
-        mstartRide = start;
-    }
+//    public Ride(String name, String start) {
+//        mbikeName = name;
+//        mstartRide = start;
+//    }
 
     public Ride(String name, String start, String stop) {
         mbikeName= name;
@@ -37,6 +37,6 @@ public class Ride {
     }
 
     public String toString() {
-        return mbikeName+" started here: " + mstartRide ;
+        return mbikeName+" went from: " + mstartRide + " to " + mstopRide;
     }
 }

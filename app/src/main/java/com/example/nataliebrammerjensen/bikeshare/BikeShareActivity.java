@@ -16,7 +16,7 @@ public class BikeShareActivity extends Activity { // GUI variables
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
-    private Ride last= new Ride("", "");
+    private Ride last= new Ride("", "", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

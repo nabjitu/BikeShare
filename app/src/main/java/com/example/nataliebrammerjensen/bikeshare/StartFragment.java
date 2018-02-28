@@ -24,7 +24,7 @@ public class StartFragment extends Fragment {
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
-    private Ride last= new Ride("", "");
+    private Ride last= new Ride("", "", "");
 
 
     @Override
@@ -65,6 +65,13 @@ public class StartFragment extends Fragment {
 
                     //HFM
                     getActivity().finish();
+
+//                    //Go to end Ride because you need to end a ride when you start a ride.
+//                    Intent toy = new Intent(StartActivity.this, EndRideActivity.class);
+////                startActivity(toy);
+//                    //HFM
+//                    toy.putStringArrayListExtra("rides", rideListStrings);
+//                    startActivityForResult(toy,1000);
                 }
             }
         });
@@ -75,5 +82,7 @@ public class StartFragment extends Fragment {
     private void updateUI(){
         lastAdded.setText(last.toString());
     }
+
+
 
 }

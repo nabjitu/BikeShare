@@ -20,18 +20,18 @@ public class RidesDB { // Singleton
     }
 
     private ArrayList<Ride> mallRides;
-    private Ride mlastRide = new Ride("", "");
+    private Ride mlastRide = new Ride("", "", "");
 
     public List<Ride> getRidesDB() {
         return mallRides;
     }
 
     public void addRide(String what, String where) {
-        mallRides.add(new Ride(what, where));
+        mallRides.add(new Ride(what, where, where));
     }
 
     public void endRide(String what, String where) {
-        mallRides.add(new Ride(what, where));
+        mallRides.add(new Ride(what, where, where));
     }
 
     private RidesDB(Context context) {

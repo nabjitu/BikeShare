@@ -28,7 +28,7 @@ public class MainActivity extends Activity { // GUI variables
 
     public static RidesDB rdb;
 
-    private Ride last= new Ride("", "");
+    private Ride last= new Ride("", "", "");
 
     //Go to other activity
     public Button GoToStart;
@@ -37,6 +37,9 @@ public class MainActivity extends Activity { // GUI variables
 
     public ArrayAdapter buckysAdapter;
     final ArrayList<String> rideListStrings= new ArrayList<>();
+
+    //Current ride
+    Ride current;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +110,7 @@ public class MainActivity extends Activity { // GUI variables
 //                startActivity(toy);
                 //HFM
                 toy.putStringArrayListExtra("rides", rideListStrings);
-                startActivityForResult(toy,1000);
+                startActivityForResult(toy, 1000);
             }
         });
     }
