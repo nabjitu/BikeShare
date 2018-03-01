@@ -20,7 +20,7 @@ import java.util.List;
 
 //Here is a skeleton for the BikeShareActivity.java:
 public class MainActivity extends Activity { // GUI variables
-    private static final String TAG = "QuizActivity";
+    private static final String TAG = "MainActivity";
 
     private Button addRide;
     private TextView lastAdded;
@@ -39,7 +39,9 @@ public class MainActivity extends Activity { // GUI variables
     final ArrayList<String> rideListStrings= new ArrayList<>();
 
     //Current ride
-    Ride current;
+    public static Ride current = new Ride("", "", "");
+    String currentString = current.toStringStart();
+    TextView currentRideView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class MainActivity extends Activity { // GUI variables
         setContentView(R.layout. activity_main);
 
         Log.d(TAG, "onCreate(Bundle) called");
+
+        currentRideView = (TextView) findViewById(R.id.last_added);
 //
 //        lastAdded = (TextView) findViewById(R.id.last_added);
 //        updateUI();
@@ -95,10 +99,19 @@ public class MainActivity extends Activity { // GUI variables
             rideListStrings.add(data.getData().toString());
             buckysAdapter.notifyDataSetChanged();
         }
+
+        //Newstuff
+        // end ride
+        if(requestCode == 2000 && resultCode==RESULT_OK) // 1000 is an ID number to differ them from each other.
+        {
+            current = rdb.getLast();
+            buckysAdapter.notifyDataSetChanged(); //MAlik HELP.. I changed stuff.. SO that startfragment adds a ride ti the Ridesdb instead if sending a string. bUt when i run the app this doesn't happen. Or at least. The listview in main activity doen't change.
+            updateUI(currentString);
+        }
     }
 
-    private void updateUI(){
-        lastAdded.setText(last.toString());
+    private void updateUI(String newAdd){
+        currentRideView.setText(newAdd);
     }
 
     public void initStart() {
@@ -109,8 +122,8 @@ public class MainActivity extends Activity { // GUI variables
                 Intent toy = new Intent(MainActivity.this, StartRideActivity.class);
 //                startActivity(toy);
                 //HFM
-                toy.putStringArrayListExtra("rides", rideListStrings);
-                startActivityForResult(toy, 1000);
+                toy.putExtra("rides", rideListStrings); //////DEt er kun den her der driller tilbage. SÅ er jeg klar til at test eom det virker. JOhnni sagde serialasable ikke r godt og den i stedet skulle oarse name, da cykel b¨avn er unik i databasen.
+                startActivityForResult(toy, 2000);
             }
         });
     }

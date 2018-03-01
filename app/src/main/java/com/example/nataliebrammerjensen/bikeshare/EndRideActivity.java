@@ -46,7 +46,13 @@ public class EndRideActivity extends Activity{ // GUI variables
                     last.setMbikeName(newWhat.getText().toString().trim());
                     last.setMstartRide(newWhere.getText().toString().trim());
 
-                    //HFM
+                    //NewStuff
+                    // Adding to Db instead of HFM
+                    Ride last = MainActivity.rdb.getLast();
+                    last.setMendRide(newWhere.getText().toString().trim());
+                    MainActivity.current = null;
+
+                    // /HFM
                     Intent data=new Intent();
                     data.setData(Uri.parse(last.toString()));
                     setResult(RESULT_OK, data);

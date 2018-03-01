@@ -26,8 +26,12 @@ public class RidesDB { // Singleton
         return mallRides;
     }
 
-    public void addRide(String what, String where) {
-        mallRides.add(new Ride(what, where, where));
+    public void addRide(String what, String from, String to) {
+        mallRides.add(new Ride(what, from, to));
+    }
+
+    public void addOneRide(Ride newbie) {
+        mallRides.add(newbie);
     }
 
     public void endRide(String what, String where) {
@@ -40,5 +44,19 @@ public class RidesDB { // Singleton
         mallRides.add(new Ride("Peters bike", "ITU", "Fields"));
         mallRides.add(new Ride("Peters bike", "Fields", "Kongens Nytorv"));
         mallRides.add(new Ride("Jørgens bike", "Home", "ITU"));
+    }
+
+    public Ride getRide(String uniqueName){
+        for (Ride r : mallRides){
+            if (r.getMbikeName().equals(uniqueName)) {
+                return r;
+            }
+            else return null;
+        }
+        return null;
+    }
+
+    public Ride getLast(){
+        return mallRides.get(mallRides.size() - 1);
     }
 }

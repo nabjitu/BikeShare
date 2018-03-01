@@ -54,9 +54,14 @@ public class StartFragment extends Fragment {
                     last.setMbikeName(newWhat.getText().toString().trim());
                     last.setMstartRide(newWhere.getText().toString().trim());
 
+                    //Isetdet for HFM
+                    //add til databasen og i main activty set current til den sidst addede i databasen.
+                    Ride newRide = new Ride (newWhat.getText().toString().trim(), newWhere.getText().toString().trim(), "");
+                    MainActivity.rdb.addOneRide(newRide);
+
                     //HFM
                     Intent data=new Intent();
-                    data.setData(Uri.parse(last.toString()));
+                    data.setData(Uri.parse(last.toStringStart()));
                     getActivity().setResult(RESULT_OK, data);
 
                     // reset text fields
@@ -80,7 +85,7 @@ public class StartFragment extends Fragment {
     }
 
     private void updateUI(){
-        lastAdded.setText(last.toString());
+        lastAdded.setText(last.toStringStart());
     }
 
 

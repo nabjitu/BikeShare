@@ -1,12 +1,14 @@
 package com.example.nataliebrammerjensen.bikeshare;
 
+import java.io.Serializable;
+
 /**
  * Created by nataliebrammerjensen on 08/02/2018.
  */
 
 
 
-public class Ride {
+public class Ride implements Serializable{
     private String mbikeName;
     private String mstartRide;
     private String mstopRide;
@@ -32,11 +34,19 @@ public class Ride {
         return mstartRide;
     }
 
+    public String setMendRide(String end) {
+        return mstopRide;
+    }
+
     public void setMstartRide(String mstartRide) {
         this.mstartRide = mstartRide;
     }
 
     public String toString() {
         return mbikeName+" went from: " + mstartRide + " to " + mstopRide;
+    }
+
+    public String toStringStart() {
+        return mbikeName+" went from: " + mstartRide;
     }
 }
