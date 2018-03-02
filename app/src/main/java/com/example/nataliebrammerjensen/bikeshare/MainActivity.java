@@ -36,12 +36,12 @@ public class MainActivity extends Activity { // GUI variables
     public Button showListOfRides;
 
     public ArrayAdapter buckysAdapter;
-    final ArrayList<String> rideListStrings= new ArrayList<>();
+    ArrayList<String> rideListStrings= new ArrayList<>();
 
     //Current ride
     public static Ride current = new Ride("", "", "");
     String currentString = current.toStringStart();
-    TextView currentRideView;
+    TextView currentRideView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,8 @@ public class MainActivity extends Activity { // GUI variables
 
         Log.d(TAG, "onCreate(Bundle) called");
 
-        currentRideView = (TextView) findViewById(R.id.last_added);
+        currentRideView=(TextView) findViewById(R.id.current);;
+        buckysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideListStrings);
 //
 //        lastAdded = (TextView) findViewById(R.id.last_added);
 //        updateUI();
@@ -96,15 +97,28 @@ public class MainActivity extends Activity { // GUI variables
         // gets the added ride and adds it to the list and notifies the adapter to display it
         if(requestCode == 1000 && resultCode==RESULT_OK) // 1000 is an ID number to differ them from each other.
         {
-            rideListStrings.add(data.getData().toString());
-            buckysAdapter.notifyDataSetChanged();
+
+            //rideListStrings.add(data.getData().toString());
+            //buckysAdapter.notifyDataSetChanged();
+            rdb=RidesDB.get(getApplicationContext());
+
+            current = rdb.getLast();
+            //currentString = null;
+            currentString=current.toString();
+            updateUI(currentString);
         }
 
         //Newstuff
         // end ride
         if(requestCode == 2000 && resultCode==RESULT_OK) // 1000 is an ID number to differ them from each other.
         {
-            current = rdb.getLast();
+            //rdb=RidesDB.get(getApplicationContext());
+//            current = rdb.getLast();
+            currentString = null;
+            ArrayList<Ride> rides=RidesDB.get(getApplicationContext()).getRidesDB();
+            rideListStrings.clear(); // clear so that we donøt have both the old and the new in this list.
+            for(Ride r : rides)
+                rideListStrings.add(r.toString());
             buckysAdapter.notifyDataSetChanged(); //MAlik HELP.. I changed stuff.. SO that startfragment adds a ride ti the Ridesdb instead if sending a string. bUt when i run the app this doesn't happen. Or at least. The listview in main activity doen't change.
             updateUI(currentString);
         }
@@ -123,7 +137,7 @@ public class MainActivity extends Activity { // GUI variables
 //                startActivity(toy);
                 //HFM
                 toy.putExtra("rides", rideListStrings); //////DEt er kun den her der driller tilbage. SÅ er jeg klar til at test eom det virker. JOhnni sagde serialasable ikke r godt og den i stedet skulle oarse name, da cykel b¨avn er unik i databasen.
-                startActivityForResult(toy, 2000);
+                startActivityForResult(toy, 1000);
             }
         });
     }
@@ -137,7 +151,7 @@ public class MainActivity extends Activity { // GUI variables
 //                startActivity(toy);
                 //HFM
                 toy.putStringArrayListExtra("rides", rideListStrings);
-                startActivityForResult(toy,1000);
+                startActivityForResult(toy,2000);
             }
         });
     }
@@ -147,11 +161,14 @@ public class MainActivity extends Activity { // GUI variables
         List<Ride> rides = rdb.getRidesDB();
 //        List<String> rideListStrings = new ArrayList<>();
         for (Ride r: rides) {
-            rideListStrings.add(r.toString());
-            System.out.println(r.toString());
+            if(!r.getMstopRide().equals("")){
+                rideListStrings.add(r.toString());
+                System.out.println(r.toString());
+            }
+
         }
 
-        buckysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideListStrings);
+
         ListView buckysListView = findViewById(R.id.listView);
         buckysListView.setAdapter(buckysAdapter);
     }
@@ -169,6 +186,7 @@ public class MainActivity extends Activity { // GUI variables
     @Override
     public void onResume() {
         super.onResume();
+
         Log.d(TAG, "onResume() called");
     }
     @Override

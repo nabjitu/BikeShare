@@ -33,9 +33,12 @@ public class Ride implements Serializable{
     public String getMstartRide() {
         return mstartRide;
     }
-
-    public String setMendRide(String end) {
+    public String getMstopRide() {
         return mstopRide;
+    }
+
+    public void setMendRide(String end) {
+         mstopRide=end;
     }
 
     public void setMstartRide(String mstartRide) {

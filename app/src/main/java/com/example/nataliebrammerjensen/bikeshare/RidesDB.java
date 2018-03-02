@@ -1,6 +1,7 @@
 package com.example.nataliebrammerjensen.bikeshare;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class RidesDB { // Singleton
     private ArrayList<Ride> mallRides;
     private Ride mlastRide = new Ride("", "", "");
 
-    public List<Ride> getRidesDB() {
+    public ArrayList<Ride> getRidesDB() {
         return mallRides;
     }
 
@@ -58,5 +59,11 @@ public class RidesDB { // Singleton
 
     public Ride getLast(){
         return mallRides.get(mallRides.size() - 1);
+    }
+
+    public void replaceLast(Ride substitute){
+        mallRides.remove(mallRides.size() - 1);
+        mallRides.add(substitute);
+        Log.d("ici",mallRides.get(mallRides.size()-1).toString());
     }
 }

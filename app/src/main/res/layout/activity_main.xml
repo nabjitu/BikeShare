@@ -20,8 +20,10 @@
 
 
         <TextView
+            android:id="@+id/current"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            />
 
         <Button
             android:id="@+id/go_to_start_button"
