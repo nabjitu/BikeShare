@@ -136,8 +136,7 @@ public class MainActivity extends Activity { // GUI variables
 //                startActivity(toy);
                 //HFM
                 toy.putExtra("rides", rideListStrings);
-//                startActivityForResult(toy, 1000);
-                startActivity(toy);
+                startActivityForResult(toy, 1000);
             }
         });
     }
@@ -151,8 +150,7 @@ public class MainActivity extends Activity { // GUI variables
 //                startActivity(toy);
                 //HFM
                 toy.putStringArrayListExtra("rides", rideListStrings);
-//                startActivityForResult(toy,2000);
-                startActivity(toy);
+                startActivityForResult(toy,2000);
             }
         });
     }
