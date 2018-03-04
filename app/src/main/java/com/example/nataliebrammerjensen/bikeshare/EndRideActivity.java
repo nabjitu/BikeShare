@@ -84,10 +84,10 @@ public class EndRideActivity extends AppCompatActivity{ // GUI variables
 
         FragmentManager fm = getSupportFragmentManager();
 
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        Fragment fragment = fm.findFragmentById(R.id.fragment_container_end);
         if (fragment == null) {
-            fragment = new StartFragment();
-            fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
+            fragment = new EndFragment();
+            fm.beginTransaction().add(R.id.fragment_container_end, fragment).commit();
         }
 
     }

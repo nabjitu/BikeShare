@@ -35,17 +35,17 @@ public class EndFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_start, container, false);
+        View v = inflater.inflate(R.layout.fragment_end, container, false);
 
-        lastAdded = (TextView) v.findViewById(R.id.last_added);
+        lastAdded = (TextView) v.findViewById(R.id.last_added_end);
         updateUI();
 
         // Button
-        addRide = (Button) v.findViewById(R.id.add_button);
+        addRide = (Button) v.findViewById(R.id.add_button_end);
 
         // Texts
-        newWhat = (TextView) v.findViewById(R.id.what_text);
-        newWhere = (TextView) v.findViewById(R.id.where_edit);
+        newWhat = (TextView) v.findViewById(R.id.what_text_end);
+        newWhere = (TextView) v.findViewById(R.id.where_edit_end);
         Ride last1 = RidesDB.get(getActivity().getApplicationContext()).getLast();
         if (last1.getMstopRide().equals("")) {
             newWhat.setText(last1.getMbikeName());
