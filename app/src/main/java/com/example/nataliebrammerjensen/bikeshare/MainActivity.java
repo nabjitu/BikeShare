@@ -89,7 +89,7 @@ public class MainActivity extends Activity { // GUI variables
         initEnd();
     }
 
-    //Hjælp fra malik
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) // Intent kommer fra StartRideActivity
     {
@@ -119,8 +119,7 @@ public class MainActivity extends Activity { // GUI variables
             rideListStrings.clear(); // clear so that we donøt have both the old and the new in this list.
             for(Ride r : rides)
                 rideListStrings.add(r.toString());
-            buckysAdapter.notifyDataSetChanged(); //MAlik HELP.. I changed stuff.. SO that startfragment adds a ride ti the Ridesdb instead if sending a string. bUt when i run the app this doesn't happen. Or at least. The listview in main activity doen't change.
-            updateUI(currentString);
+            buckysAdapter.notifyDataSetChanged(); updateUI(currentString);
         }
     }
 
@@ -136,8 +135,9 @@ public class MainActivity extends Activity { // GUI variables
                 Intent toy = new Intent(MainActivity.this, StartRideActivity.class);
 //                startActivity(toy);
                 //HFM
-                toy.putExtra("rides", rideListStrings); //////DEt er kun den her der driller tilbage. SÅ er jeg klar til at test eom det virker. JOhnni sagde serialasable ikke r godt og den i stedet skulle oarse name, da cykel b¨avn er unik i databasen.
-                startActivityForResult(toy, 1000);
+                toy.putExtra("rides", rideListStrings);
+//                startActivityForResult(toy, 1000);
+                startActivity(toy);
             }
         });
     }
@@ -151,7 +151,8 @@ public class MainActivity extends Activity { // GUI variables
 //                startActivity(toy);
                 //HFM
                 toy.putStringArrayListExtra("rides", rideListStrings);
-                startActivityForResult(toy,2000);
+//                startActivityForResult(toy,2000);
+                startActivity(toy);
             }
         });
     }
