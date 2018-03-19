@@ -11,8 +11,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amitshekhar.DebugDB;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by nataliebrammerjensen on 08/02/2018.
@@ -26,7 +29,7 @@ public class MainActivity extends Activity { // GUI variables
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
-    public static RidesDB rdb;
+    public static RidesDB rSqlDb;
 
     private Ride last= new Ride("", "", "");
 
@@ -37,6 +40,11 @@ public class MainActivity extends Activity { // GUI variables
 
     public ArrayAdapter buckysAdapter;
     ArrayList<String> rideListStrings= new ArrayList<>();
+    UUID uuidNew;
+
+    //NDB
+    List<Ride> mRides;
+    String uuidString = "";
 
     //Current ride
     public static Ride current = new Ride("", "", "");
@@ -50,32 +58,11 @@ public class MainActivity extends Activity { // GUI variables
 
         Log.d(TAG, "onCreate(Bundle) called");
 
+        //Her sørger den for at sql databasen bliver lavet.
+        rSqlDb = RidesDB.get(getApplicationContext());
+
         currentRideView=(TextView) findViewById(R.id.current);;
         buckysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideListStrings);
-//
-//        lastAdded = (TextView) findViewById(R.id.last_added);
-//        updateUI();
-//
-//        // Button
-//        addRide = (Button) findViewById(R.id.add_button);
-//
-//        // Texts
-//        newWhat = (TextView) findViewById(R.id.what_text);
-//        newWhere =(TextView) findViewById(R.id.where_edit);
-//
-//        // view products click event
-//        addRide.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if ((newWhat.getText().length()>0) && (newWhere.getText().length()>0 )){
-//                    last.setMbikeName(newWhat.getText().toString().trim());
-//                    last.setMstartRide(newWhere.getText().toString().trim());
-//
-//                    // reset text fields
-//                    newWhat.setText(""); newWhere.setText(""); updateUI();
-//                }
-//            }
-//        });
 
         showListOfRides = (Button) findViewById(R.id.list_rides_button);
         showListOfRides.setOnClickListener(new View.OnClickListener() {
@@ -100,9 +87,12 @@ public class MainActivity extends Activity { // GUI variables
 
             //rideListStrings.add(data.getData().toString());
             //buckysAdapter.notifyDataSetChanged();
-            rdb=RidesDB.get(getApplicationContext());
 
-            current = rdb.getLast();
+            rSqlDb=RidesDB.get(getApplicationContext());
+            //fp uuid fra startactivitywith result. Og brug det id til at fp ride.
+            uuidString = data.getData().toString();
+            System.out.println(uuidString);
+            current = RidesDB.get(getApplicationContext()).getRIde(UUID.fromString(uuidString));
             //currentString = null;
             currentString=current.toString();
             updateUI(currentString);
@@ -119,7 +109,8 @@ public class MainActivity extends Activity { // GUI variables
             rideListStrings.clear(); // clear so that we donøt have both the old and the new in this list.
             for(Ride r : rides)
                 rideListStrings.add(r.toString());
-            buckysAdapter.notifyDataSetChanged(); updateUI(currentString);
+            buckysAdapter.notifyDataSetChanged();
+            updateUI(currentString);
         }
     }
 
@@ -133,9 +124,11 @@ public class MainActivity extends Activity { // GUI variables
             @Override
             public void onClick(View v) {
                 Intent toy = new Intent(MainActivity.this, StartRideActivity.class);
-//                startActivity(toy);
+                //startActivity(toy);
                 //HFM
-                toy.putExtra("rides", rideListStrings);
+                //%NDB
+                //toy.putExtra("rides", rideListStrings);
+                toy.putExtra("UUIDNUMBER", uuidNew);
                 startActivityForResult(toy, 1000);
             }
         });
@@ -147,17 +140,22 @@ public class MainActivity extends Activity { // GUI variables
             @Override
             public void onClick(View v) {
                 Intent toy = new Intent(MainActivity.this, EndRideActivity.class);
-//                startActivity(toy);
+                //startActivity(toy);
                 //HFM
-                toy.putStringArrayListExtra("rides", rideListStrings);
+                //%NDB
+                toy.putExtra("UUIDNUMBER", uuidString);
+                System.out.println("qq"+uuidNew);
                 startActivityForResult(toy,2000);
             }
         });
     }
 
     public void populateLIstView(){
-        rdb = RidesDB.get(getApplicationContext());
-        List<Ride> rides = rdb.getRidesDB();
+        //NDB
+        DebugDB.getAddressLog();
+
+        /*rSqlDb = RidesDB.get(getApplicationContext());
+        List<Ride> rides = rSqlDb.getRidesDB();
 //        List<String> rideListStrings = new ArrayList<>();
         for (Ride r: rides) {
             if(!r.getMstopRide().equals("")){
@@ -169,7 +167,29 @@ public class MainActivity extends Activity { // GUI variables
 
 
         ListView buckysListView = findViewById(R.id.listView);
+        buckysListView.setAdapter(buckysAdapter);*/
+
+        //NDB
+        rSqlDb = RidesDB.get(getApplicationContext());
+        ArrayList<Ride> sqlRides = rSqlDb.getAllRides();
+//        List<String> rideListStrings = new ArrayList<>();
+        for (Ride r: sqlRides) {
+            if(!r.getMstopRide().equals("")){
+                rideListStrings.add(r.toString());
+                System.out.println(r.toString());
+            }
+
+        }
+
+
+        ListView buckysListView = findViewById(R.id.listView);
         buckysListView.setAdapter(buckysAdapter);
+
+    }
+
+    //NDB
+    public void setCrimes(List<Ride> rides) {
+        mRides = rides;
     }
 
     @Override

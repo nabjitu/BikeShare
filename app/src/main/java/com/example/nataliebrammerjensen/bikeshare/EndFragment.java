@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.UUID;
+
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -46,9 +48,21 @@ public class EndFragment extends Fragment {
         // Texts
         newWhat = (TextView) v.findViewById(R.id.what_text_end);
         newWhere = (TextView) v.findViewById(R.id.where_edit_end);
-        Ride last1 = RidesDB.get(getActivity().getApplicationContext()).getLast();
-        if (last1.getMstopRide().equals("")) {
-            newWhat.setText(last1.getMbikeName());
+
+
+        //get data from intent fra mainactivity. Jeg skal bruge UUID
+        //NDB
+        //Intent data = new Intent();
+        //UUID uuidFromMain = UUID.fromString(data.getData().toString());
+
+        //ANDB
+        String uuidFromMain = getActivity().getIntent().getExtras().getString("UUIDNUMBER");
+        System.out.println(uuidFromMain);
+        UUID uuidUUID = UUID.fromString(uuidFromMain);
+        final Ride newRide = RidesDB.get(getActivity().getApplicationContext()).getRIde(uuidUUID);
+
+        if (newRide.getMstopRide().equals("")) {
+            newWhat.setText(newRide.getMbikeName());
             newWhat.setEnabled(false);
         }
         // view products click event
@@ -61,10 +75,10 @@ public class EndFragment extends Fragment {
 
                     //NewStuff
                     // Adding to Db instead of HFM
-                    Ride last = RidesDB.get(getActivity().getApplicationContext()).getLast();
-                    last.setMendRide(newWhere.getText().toString().trim());
+                    //Ride last = RidesDB.get(getActivity().getApplicationContext()).getLast();
+                    newRide.setMendRide(newWhere.getText().toString().trim());
                     RidesDB rdb = RidesDB.get(getActivity().getApplicationContext());
-                    rdb.replaceLast(last);
+                    rdb.replaceLast(newRide, newRide.getId());
 
                     //change
 //                    RidesDB rdb = RidesDB.get(getApplicationContext());
@@ -72,8 +86,13 @@ public class EndFragment extends Fragment {
 //                    current = null;
 
                     // /HFM
-                    Intent data = new Intent();
+                    /*Intent data = new Intent();
                     data.setData(Uri.parse(last.toString()));
+                    getActivity().setResult(RESULT_OK, data);*/
+
+                    //NDB
+                    Intent data = new Intent();
+                    data.setData(Uri.parse(newRide.getId().toString()));
                     getActivity().setResult(RESULT_OK, data);
 
                     // reset text fields

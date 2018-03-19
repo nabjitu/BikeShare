@@ -50,4 +50,12 @@ public class BikeShareActivity extends Activity { // GUI variables
     private void updateUI(){
         lastAdded.setText(last.toString());
     }
+
+//    //NDB
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        Ride mRide = RidesDB.get(getApplicationContext()).getLast();
+//        RidesDB.get(RidesDB.get(getApplicationContext()).updateRide(mRide));
+//    }
 }

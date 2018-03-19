@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.UUID;
+
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -56,14 +58,15 @@ public class StartFragment extends Fragment {
 
                     //Isetdet for HFM
                     //add til databasen og i main activty set current til den sidst addede i databasen.
-                    Ride newRide = new Ride (newWhat.getText().toString().trim(), newWhere.getText().toString().trim(), "");
+                    Ride newRide = new Ride (UUID.randomUUID(), newWhat.getText().toString().trim(), newWhere.getText().toString().trim(), "");
 
                     RidesDB rdb = RidesDB.get(getContext());
-                    rdb.addOneRide(newRide);
+                    rdb.addRide(newRide);
 
                     //HFM
                     Intent data=new Intent();
-                    data.setData(Uri.parse(last.toStringStart()));
+                    //data.setData(Uri.parse(last.toStringStart()));
+                    data.setData(Uri.parse(newRide.getId().toString()));
                     getActivity().setResult(RESULT_OK, data);
 
                     // reset text fields
