@@ -106,7 +106,7 @@ public class RidesDB { // Singleton
 
     public void replaceLast(Ride substitute, UUID old){
         //NDB
-        for(Ride r : getAllRides()){
+        /*for(Ride r : getAllRides()){
             if (r.getId().equals(old)){
                 //Modify ebtry and add a end attribute ti the ride.
                 mDatabase.update(RideDBSchema.RideTable.NAME, getContentValues(r), "UUID ="+old, null ); //Her er jeg nået til. JEg mangler at finde ud af hvad der skal stå på null's plads.
@@ -116,7 +116,11 @@ public class RidesDB { // Singleton
 
         mallRides.remove(mallRides.size() - 1);
         mallRides.add(substitute);
-        Log.d("ici",mallRides.get(mallRides.size()-1).toString());
+        Log.d("ici",mallRides.get(mallRides.size()-1).toString());*/
+
+        //HFM19.30.1
+        //Prepared statement to avid sql injection
+        mDatabase.update(RideDBSchema.RideTable.NAME, getContentValues(substitute), "uuid =?", new String[]{old.toString()} );
     }
 
     private RideCursorWrapper queryRides(String whereClause, String[] whereArgs) {
