@@ -38,6 +38,9 @@ public class RidesDB { // Singleton
         values.put(RideDBSchema.RideTable.Cols.BIKENAME, ride.getMbikeName());
         values.put(RideDBSchema.RideTable.Cols.START, ride.getMstartRide());
         values.put(RideDBSchema.RideTable.Cols.STOP, ride.getMstopRide());
+        values.put(RideDBSchema.RideTable.Cols.DATE, ride.getDay());
+        values.put(RideDBSchema.RideTable.Cols.HOUR, ride.getHour());
+        values.put(RideDBSchema.RideTable.Cols.SECOND, ride.getSecond());
         return values;
     }
 

@@ -25,7 +25,9 @@ public class RideBaseHelper extends SQLiteOpenHelper {
                 + RideDBSchema.RideTable.Cols.BIKENAME
                 + ", " + RideDBSchema.RideTable.Cols.START + ", "
                 + RideDBSchema.RideTable.Cols.STOP  + ", "
-                + RideDBSchema.RideTable.Cols.DATE +
+                + RideDBSchema.RideTable.Cols.DATE + ", "
+                + RideDBSchema.RideTable.Cols.HOUR + ", "
+                + RideDBSchema.RideTable.Cols.SECOND +
                 ")"
         );
     }

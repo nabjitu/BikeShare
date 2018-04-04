@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/what_bike_ride"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size"/>
+
+    // TODO Set other Views to display a ride in a single row
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/where_from_ride"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/where_to_ride"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_of_ride"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_of_start"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_of_end"
+        android:layout_weight="1"
+        android:textSize="@dimen/text_size"/>
+
+
+</LinearLayout>

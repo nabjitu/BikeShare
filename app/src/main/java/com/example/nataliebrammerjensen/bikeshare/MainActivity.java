@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amitshekhar.DebugDB;
+import com.example.nataliebrammerjensen.bikeshare.ridesBrowser.BikeShareActivityRidesBrowser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,11 @@ public class MainActivity extends Activity { // GUI variables
     public Button showListOfRides;
 
     public ArrayAdapter buckysAdapter;
+    public ArrayAdapter buckysAdapter2;
+    public ArrayAdapter buckysAdapter3;
     ArrayList<String> rideListStrings= new ArrayList<>();
+    ArrayList<String> rideDates= new ArrayList<>();
+    ArrayList<String> rideTimes= new ArrayList<>();
     UUID uuidNew;
 
     //NDB
@@ -63,12 +68,17 @@ public class MainActivity extends Activity { // GUI variables
 
         currentRideView=(TextView) findViewById(R.id.current);;
         buckysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideListStrings);
+        buckysAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideDates);
+        buckysAdapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideTimes);
 
         showListOfRides = (Button) findViewById(R.id.list_rides_button);
         showListOfRides.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                populateLIstView();
+                //populateLIstView();
+
+                Intent toy = new Intent(MainActivity.this, BikeShareActivityRidesBrowser.class);
+                startActivity(toy);
             }
         });
 
@@ -107,8 +117,13 @@ public class MainActivity extends Activity { // GUI variables
             currentString = null;
             ArrayList<Ride> rides=RidesDB.get(getApplicationContext()).getRidesDB();
             rideListStrings.clear(); // clear so that we donøt have both the old and the new in this list.
-            for(Ride r : rides)
+            for(Ride r : rides) {
                 rideListStrings.add(r.toString());
+                //W5
+                String day = String.valueOf(r.getDay());
+                rideDates.add(day);
+                System.out.println("sdf");
+            }
             buckysAdapter.notifyDataSetChanged();
             updateUI(currentString);
         }
@@ -176,14 +191,42 @@ public class MainActivity extends Activity { // GUI variables
         for (Ride r: sqlRides) {
             if(!r.getMstopRide().equals("")){
                 rideListStrings.add(r.toString());
-                System.out.println(r.toString());
+                //listView2
+                String day = String.valueOf(r.getMsdf());
+                System.out.println("time = " + r.getMsdf());
+                System.out.println("day = " + day);
+                rideDates.add(day);
+                //listView3
+                String time = String.valueOf(r.getHhmmss());
+                System.out.println("time = " + r.hhmmss);
+                System.out.println("time = " + time);
+                rideTimes.add(time);
             }
 
         }
 
+        /*
+        ArrayList<Ride> rides=RidesDB.get(getApplicationContext()).getRidesDB();
+        rideListStrings.clear(); // clear so that we donøt have both the old and the new in this list.
+        for(Ride r : rides) {
+            rideListStrings.add(r.toString());
+            //W5
+            String day = String.valueOf(r.getDay());
+            rideDates.add(day);
+            System.out.println("sdf");
+        }
+        buckysAdapter.notifyDataSetChanged();
+        updateUI(currentString);
+        */
 
-        ListView buckysListView = findViewById(R.id.listView);
+        ListView buckysListView = findViewById(R.id.listView1);
         buckysListView.setAdapter(buckysAdapter);
+
+        ListView buckysListView2 = findViewById(R.id.listView2);
+        buckysListView2.setAdapter(buckysAdapter2);
+
+        ListView buckysListView3 = findViewById(R.id.listView3);
+        buckysListView3.setAdapter(buckysAdapter3);
 
     }
 

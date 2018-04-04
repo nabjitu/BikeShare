@@ -2,6 +2,7 @@ package com.example.nataliebrammerjensen.bikeshare;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,32 +17,85 @@ public class Ride implements Serializable{
     private String msdf;
     //NDB
     private UUID mId;
+    //W5
+    Date currentDate;
+    int day;
+    int hour;
+    int minutes;
+    int second;
+
+    String hhmmss;
 
     public Ride(String name, String start) {
         mbikeName = name;
         mstartRide = start;
+
+        mId = UUID.randomUUID();
+
+        Calendar rightNow = Calendar.getInstance();
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minutes = rightNow.get(Calendar.MINUTE);
+        int second = rightNow.get(Calendar.SECOND);
+
+        currentDate = new Date();
+        long time = currentDate.getTime();
+        msdf = new SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());
+        hhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
 
     public UUID getId() {
         return mId;
     }
 
+    public String getHhmmss() {
+        return hhmmss;
+    }
+
     public Ride() {
         mId = UUID.randomUUID();
 
         //W5
-        Date currentDate = new Date();
+        currentDate = new Date();
         long time = currentDate.getTime();
-        msdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new java.util.Date());
+        Calendar rightNow = Calendar.getInstance();
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minutes = rightNow.get(Calendar.MINUTE);
+        int second = rightNow.get(Calendar.SECOND);
+        msdf = new SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());
+        hhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
 
     public Ride(UUID id) {
         mId = id;
 
         //W5
-        Date currentDate = new Date();
+        Calendar rightNow = Calendar.getInstance();
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minutes = rightNow.get(Calendar.MINUTE);
+        int second = rightNow.get(Calendar.SECOND);
+
+        currentDate = new Date();
         long time = currentDate.getTime();
-        msdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new java.util.Date());
+        msdf = new SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());
+        hhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
+    }
+
+    public int getDay() {
+        return day;
+    }
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public int getSecond() {
+        return second;
     }
 
     public String getMsdf() {
@@ -55,9 +109,17 @@ public class Ride implements Serializable{
 
 
         //W5
+        Calendar rightNow = Calendar.getInstance();
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minutes = rightNow.get(Calendar.MINUTE);
+        int second = rightNow.get(Calendar.SECOND);
+
+
         Date currentDate = new Date();
         long time = currentDate.getTime();
-        msdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new java.util.Date());
+        msdf = new SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());
+        hhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
     //NDB
     public Ride(UUID id, String name, String start, String stop) {
@@ -67,9 +129,17 @@ public class Ride implements Serializable{
         mstopRide = stop;
 
         //W5
+        Calendar rightNow = Calendar.getInstance();
+        int day = rightNow.get(Calendar.DAY_OF_MONTH);
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int minutes = rightNow.get(Calendar.MINUTE);
+        int second = rightNow.get(Calendar.SECOND);
+
+
         Date currentDate = new Date();
         long time = currentDate.getTime();
         msdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new java.util.Date());
+        hhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
 
     public String getMbikeName() {

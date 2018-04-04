@@ -13,7 +13,10 @@ public class RideDBSchema {
             public static final String BIKENAME = "bikename";
             public static final String START = "start";
             public static final String STOP = "stop";
-            public static final String DATE = "date";
+            //public static final String DATE = "date";
+            public static final String DATE = "CalendarDate";
+            public static final String HOUR = "hour";
+            public static final String SECOND = "second";
 
         }
     }
