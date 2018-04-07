@@ -10,7 +10,7 @@ import java.util.UUID;
  * Created by nataliebrammerjensen on 08/02/2018.
  */
 
-public class Ride implements Serializable{
+public class RideMine implements Serializable{
     private String mbikeName;
     private String mstartRide;
     private String mstopRide;
@@ -26,7 +26,7 @@ public class Ride implements Serializable{
 
     String hhmmss;
 
-    public Ride(String name, String start) {
+    public RideMine(String name, String start) {
         mbikeName = name;
         mstartRide = start;
 
@@ -52,7 +52,7 @@ public class Ride implements Serializable{
         return hhmmss;
     }
 
-    public Ride() {
+    public RideMine() {
         mId = UUID.randomUUID();
 
         //W5
@@ -67,7 +67,7 @@ public class Ride implements Serializable{
         hhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
 
-    public Ride(UUID id) {
+    public RideMine(UUID id) {
         mId = id;
 
         //W5
@@ -102,7 +102,7 @@ public class Ride implements Serializable{
         return msdf;
     }
 
-    public Ride(String name, String start, String stop) {
+    public RideMine(String name, String start, String stop) {
         mbikeName= name;
         mstartRide= start;
         mstopRide = stop;
@@ -122,7 +122,7 @@ public class Ride implements Serializable{
         hhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
     //NDB
-    public Ride(UUID id, String name, String start, String stop) {
+    public RideMine(UUID id, String name, String start, String stop) {
         mId = id;
         mbikeName= name;
         mstartRide= start;

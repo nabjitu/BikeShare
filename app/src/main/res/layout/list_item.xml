@@ -5,10 +5,12 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/what_bike_ride"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/what_bike_ride"
         android:layout_weight="1"
+        android:background="@android:color/background_dark"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size"/>
 
     // TODO Set other Views to display a ride in a single row
@@ -17,36 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/where_from_ride"
-        android:layout_weight="1"
+        android:layout_weight="100"
         android:textSize="@dimen/text_size"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/where_to_ride"
-        android:layout_weight="1"
-        android:textSize="@dimen/text_size"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/date_of_ride"
-        android:layout_weight="1"
-        android:textSize="@dimen/text_size"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/time_of_start"
-        android:layout_weight="1"
-        android:textSize="@dimen/text_size"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/time_of_end"
-        android:layout_weight="1"
-        android:textSize="@dimen/text_size"/>
 
 
 </LinearLayout>

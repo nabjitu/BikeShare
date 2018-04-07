@@ -25,7 +25,7 @@ public class EndFragment extends Fragment {
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
-    private Ride last= new Ride("", "", "");
+    private RideMine last= new RideMine("", "", "");
 
     //tags
     private static final String EXTRA_RIDES_DB = "com.bignerdranch.android.geoquiz.rides_DB";
@@ -59,7 +59,7 @@ public class EndFragment extends Fragment {
         String uuidFromMain = getActivity().getIntent().getExtras().getString("UUIDNUMBER");
         System.out.println(uuidFromMain);
         UUID uuidUUID = UUID.fromString(uuidFromMain);
-        final Ride newRide = RidesDB.get(getActivity().getApplicationContext()).getRIde(uuidUUID);
+        final RideMine newRide = MyRidesDB.get(getActivity().getApplicationContext()).getRIde(uuidUUID);
 
         if (newRide.getMstopRide().equals("")) {
             newWhat.setText(newRide.getMbikeName());
@@ -77,7 +77,7 @@ public class EndFragment extends Fragment {
                     // Adding to Db instead of HFM
                     //Ride last = RidesDB.get(getActivity().getApplicationContext()).getLast();
                     newRide.setMendRide(newWhere.getText().toString().trim());
-                    RidesDB rdb = RidesDB.get(getActivity().getApplicationContext());
+                    MyRidesDB rdb = MyRidesDB.get(getActivity().getApplicationContext());
                     rdb.replaceLast(newRide, newRide.getId());
 
                     //change

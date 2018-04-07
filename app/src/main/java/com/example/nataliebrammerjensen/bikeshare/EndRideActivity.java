@@ -24,7 +24,7 @@ public class EndRideActivity extends AppCompatActivity{ // GUI variables
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
-    private Ride last= new Ride("", "", "");
+    private RideMine last= new RideMine("", "", "");
 
     //tags
     private static final String EXTRA_RIDES_DB = "com.bignerdranch.android.geoquiz.rides_DB";

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.nataliebrammerjensen.bikeshare.Ride;
-
 /**
  * Created by nataliebrammerjensen on 14/03/2018.
  */

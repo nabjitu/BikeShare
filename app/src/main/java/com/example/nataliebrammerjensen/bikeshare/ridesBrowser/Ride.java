@@ -15,6 +15,10 @@ public class Ride {
     public Ride(String name, String start) {
         mbikeName= name;
         mstartRide= start;
+
+        //N
+        mStartddmmyyyy = new SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());
+        mStarthhmmss = new SimpleDateFormat("HH:mm:ss").format(new java.util.Date());
     }
 
     public Ride(String name, String startRide, String endRide) { // mainly for testing

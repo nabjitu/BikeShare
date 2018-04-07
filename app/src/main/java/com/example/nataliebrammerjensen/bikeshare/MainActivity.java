@@ -30,9 +30,9 @@ public class MainActivity extends Activity { // GUI variables
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
-    public static RidesDB rSqlDb;
+    public static MyRidesDB rSqlDb;
 
-    private Ride last= new Ride("", "", "");
+    private RideMine last= new RideMine("", "", "");
 
     //Go to other activity
     public Button GoToStart;
@@ -48,11 +48,11 @@ public class MainActivity extends Activity { // GUI variables
     UUID uuidNew;
 
     //NDB
-    List<Ride> mRides;
+    List<RideMine> mRides;
     String uuidString = "";
 
     //Current ride
-    public static Ride current = new Ride("", "", "");
+    public static RideMine current = new RideMine("", "", "");
     String currentString = current.toStringStart();
     TextView currentRideView ;
 
@@ -64,7 +64,7 @@ public class MainActivity extends Activity { // GUI variables
         Log.d(TAG, "onCreate(Bundle) called");
 
         //Her sørger den for at sql databasen bliver lavet.
-        rSqlDb = RidesDB.get(getApplicationContext());
+        rSqlDb = MyRidesDB.get(getApplicationContext());
 
         currentRideView=(TextView) findViewById(R.id.current);;
         buckysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, rideListStrings);
@@ -98,11 +98,11 @@ public class MainActivity extends Activity { // GUI variables
             //rideListStrings.add(data.getData().toString());
             //buckysAdapter.notifyDataSetChanged();
 
-            rSqlDb=RidesDB.get(getApplicationContext());
+            rSqlDb=MyRidesDB.get(getApplicationContext());
             //fp uuid fra startactivitywith result. Og brug det id til at fp ride.
             uuidString = data.getData().toString();
             System.out.println(uuidString);
-            current = RidesDB.get(getApplicationContext()).getRIde(UUID.fromString(uuidString));
+            current = MyRidesDB.get(getApplicationContext()).getRIde(UUID.fromString(uuidString));
             //currentString = null;
             currentString=current.toString();
             updateUI(currentString);
@@ -115,9 +115,9 @@ public class MainActivity extends Activity { // GUI variables
             //rdb=RidesDB.get(getApplicationContext());
 //            current = rdb.getLast();
             currentString = null;
-            ArrayList<Ride> rides=RidesDB.get(getApplicationContext()).getRidesDB();
+            ArrayList<RideMine> rides=MyRidesDB.get(getApplicationContext()).getRidesDB();
             rideListStrings.clear(); // clear so that we donøt have both the old and the new in this list.
-            for(Ride r : rides) {
+            for(RideMine r : rides) {
                 rideListStrings.add(r.toString());
                 //W5
                 String day = String.valueOf(r.getDay());
@@ -185,10 +185,10 @@ public class MainActivity extends Activity { // GUI variables
         buckysListView.setAdapter(buckysAdapter);*/
 
         //NDB
-        rSqlDb = RidesDB.get(getApplicationContext());
-        ArrayList<Ride> sqlRides = rSqlDb.getAllRides();
+        rSqlDb = MyRidesDB.get(getApplicationContext());
+        ArrayList<RideMine> sqlRides = rSqlDb.getAllRides();
 //        List<String> rideListStrings = new ArrayList<>();
-        for (Ride r: sqlRides) {
+        for (RideMine r: sqlRides) {
             if(!r.getMstopRide().equals("")){
                 rideListStrings.add(r.toString());
                 //listView2
@@ -231,7 +231,7 @@ public class MainActivity extends Activity { // GUI variables
     }
 
     //NDB
-    public void setCrimes(List<Ride> rides) {
+    public void setCrimes(List<RideMine> rides) {
         mRides = rides;
     }
 

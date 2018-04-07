@@ -25,9 +25,7 @@ public class BikeShareActivityRidesBrowser extends FragmentActivity {
 
         Fragment fragment= fm.findFragmentById(R.id.fragment_list_container);
         if (fragment == null) {
-            fm.beginTransaction()
-                    .add(R.id.fragment_list_container, new ListFragment())
-                    .commit();
+            fm.beginTransaction().add(R.id.fragment_list_container, new ListFragment()).commit();
         }
     }
 }

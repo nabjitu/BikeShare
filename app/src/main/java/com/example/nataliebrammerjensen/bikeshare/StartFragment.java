@@ -26,7 +26,7 @@ public class StartFragment extends Fragment {
     private TextView lastAdded;
     private TextView newWhat, newWhere;
 
-    private Ride last= new Ride("", "", "");
+    private RideMine last= new RideMine("", "", "");
 
 
     @Override
@@ -58,9 +58,9 @@ public class StartFragment extends Fragment {
 
                     //Isetdet for HFM
                     //add til databasen og i main activty set current til den sidst addede i databasen.
-                    Ride newRide = new Ride (UUID.randomUUID(), newWhat.getText().toString().trim(), newWhere.getText().toString().trim(), "");
+                    RideMine newRide = new RideMine (UUID.randomUUID(), newWhat.getText().toString().trim(), newWhere.getText().toString().trim(), "");
 
-                    RidesDB rdb = RidesDB.get(getContext());
+                    MyRidesDB rdb = MyRidesDB.get(getContext());
                     rdb.addRide(newRide);
 
                     //HFM

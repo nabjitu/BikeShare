@@ -5,34 +5,37 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.nataliebrammerjensen.bikeshare.database.RideBaseHelper;
 import com.example.nataliebrammerjensen.bikeshare.database.RideCursorWrapper;
 import com.example.nataliebrammerjensen.bikeshare.database.RideDBSchema;
+import com.example.nataliebrammerjensen.bikeshare.ridesBrowser.Ride;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.UUID;
 
 /**
  * Created by nataliebrammerjensen on 14/02/2018.
  */
 
-public class RidesDB { // Singleton
-    private static RidesDB sRidesDB;
+public class MyRidesDB extends Observable { // Singleton
+    private static MyRidesDB sRidesDB;
 
     private static SQLiteDatabase mDatabase;
     private Context mContext;
 
-    public static RidesDB get(Context context) {
+    public static MyRidesDB get(Context context) {
         if (sRidesDB == null) {
-            sRidesDB= new RidesDB(context);
+            sRidesDB= new MyRidesDB(context);
         }
 
         return sRidesDB;
     }
 
-    private static ContentValues getContentValues(Ride ride) {
+    private static ContentValues getContentValues(RideMine ride) {
         ContentValues values = new ContentValues();
         values.put(RideDBSchema.RideTable.Cols.UUID, ride.getId().toString());
         values.put(RideDBSchema.RideTable.Cols.BIKENAME, ride.getMbikeName());
@@ -44,38 +47,38 @@ public class RidesDB { // Singleton
         return values;
     }
 
-    private ArrayList<Ride> mallRides;
-    private Ride mlastRide = new Ride("", "", "");
+    private ArrayList<RideMine> mallRides;
+    private RideMine mlastRide = new RideMine("", "", "");
 
-    public ArrayList<Ride> getRidesDB() {
+    public ArrayList<RideMine> getRidesDB() {
         return mallRides;
     }
 
     public void addRide(String what, String from, String to) {
-        mallRides.add(new Ride(what, from, to));
+        mallRides.add(new RideMine(what, from, to));
     }
 
     //NDB
-    public void addRide(Ride r) {
+    public void addRide(RideMine r) {
         ContentValues values = getContentValues(r);
         mDatabase.insert(RideDBSchema.RideTable.NAME, null, values);
     }
 
-    public void updateRide(Ride ride) {
+    public void updateRide(RideMine ride) {
         String uuidString = ride.getId().toString();
         ContentValues values = getContentValues(ride);
         mDatabase.update(RideDBSchema.RideTable.NAME, values, RideDBSchema.RideTable.Cols.UUID + " = ?", new String[] { uuidString });
     }
 
-    public void addOneRide(Ride newbie) {
+    public void addOneRide(RideMine newbie) {
         mallRides.add(newbie);
     }
 
     public void endRide(String what, String where) {
-        mallRides.add(new Ride(what, where, where));
+        mallRides.add(new RideMine(what, where, where));
     }
 
-    private RidesDB(Context context) {
+    private MyRidesDB(Context context) {
         mallRides= new ArrayList<>();
         // Add some rides for testing purposes
 //        mallRides.add(new Ride("Peters bike", "ITU", "Fields"));
@@ -87,8 +90,8 @@ public class RidesDB { // Singleton
         mDatabase = new RideBaseHelper(mContext).getWritableDatabase();
     }
 
-    public Ride getRide(String uniqueName){
-        for (Ride r : mallRides){
+    public RideMine getRide(String uniqueName){
+        for (RideMine r : mallRides){
             if (r.getMbikeName().equals(uniqueName)) {
                 return r;
             }
@@ -107,7 +110,7 @@ public class RidesDB { // Singleton
         }
     }*/
 
-    public void replaceLast(Ride substitute, UUID old){
+    public void replaceLast(RideMine substitute, UUID old){
         //NDB
         /*for(Ride r : getAllRides()){
             if (r.getId().equals(old)){
@@ -138,8 +141,8 @@ public class RidesDB { // Singleton
         return new RideCursorWrapper(cursor);
     }
 
-    public ArrayList<Ride> getAllRides() {
-        ArrayList<Ride> rides = new ArrayList<>();
+    public ArrayList<RideMine> getAllRides() {
+        ArrayList<RideMine> rides = new ArrayList<>();
         RideCursorWrapper cursor = queryRides(null, null);
         try {
             cursor.moveToFirst();
@@ -153,7 +156,7 @@ public class RidesDB { // Singleton
         return rides;
     }
 
-    public Ride getRIde(UUID id) {
+    public RideMine getRIde(UUID id) {
         RideCursorWrapper cursor = queryRides(
 
         RideDBSchema.RideTable.Cols.UUID + " = ?",
@@ -168,5 +171,12 @@ public class RidesDB { // Singleton
         } finally {
             cursor.close();
         }
+    }
+
+    public void delete(RideMine r, Context c) {
+        mallRides.remove(r);
+        Toast.makeText(c, "Deleted ride " + r.getMbikeName(), Toast.LENGTH_LONG).show();
+        this.setChanged();
+        notifyObservers();
     }
 }

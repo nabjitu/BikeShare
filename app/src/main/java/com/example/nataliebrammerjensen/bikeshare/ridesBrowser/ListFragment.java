@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nataliebrammerjensen.bikeshare.MyRidesDB;
 import com.example.nataliebrammerjensen.bikeshare.R;
+import com.example.nataliebrammerjensen.bikeshare.RideMine;
 
 import java.util.List;
 import java.util.Observable;
@@ -45,15 +48,18 @@ public class ListFragment extends Fragment implements Observer {
     private TextView mStartTimeTextView;
     private TextView mEndTimeTextView;
 
-    public Ride mRide;
+    public RideMine mRide;
 
     public RideHolder(LayoutInflater inflater, ViewGroup parent){
       super(inflater.inflate(R.layout.list_item, parent, false));
 
+      //Chap 9
+      itemView.setOnClickListener(this);
+
       // TODO set views
       View iv = inflater.inflate(R.layout.list_item, parent, false); //iv = itemView
       //Side 182
-      //mWhatTextView = (TextView) iv;
+      //mWhatTextView = (TextView) iv
 
       //Stackoverflow
       /*LinearLayout ll = (LinearLayout) view; // get the parent layout view
@@ -63,34 +69,38 @@ public class ListFragment extends Fragment implements Observer {
       //N
       mWhatTextView = (TextView) iv.findViewById(R.id.what_bike_ride);
       mFromTextView = (TextView) iv.findViewById(R.id.where_from_ride);
-      mToTextView = (TextView) iv.findViewById(R.id.where_to_ride);
-      mDateTextView = (TextView) iv.findViewById(R.id.date_of_ride);
-      mStartTimeTextView = (TextView) iv.findViewById(R.id.time_of_start);
-      mEndTimeTextView = (TextView) iv.findViewById(R.id.time_of_end);
+      //mToTextView = (TextView) iv.findViewById(R.id.where_to_ride);
+      //mDateTextView = (TextView) iv.findViewById(R.id.date_of_ride);
+      //mStartTimeTextView = (TextView) iv.findViewById(R.id.time_of_start);
+      //mEndTimeTextView = (TextView) iv.findViewById(R.id.time_of_end);
 
       iv.setOnClickListener(this);
+
     }
 
-    public void bind(Ride ride){
+    public void bind(RideMine ride){
       mRide= ride;
       // TODO set contents of a row
       //Side 189 When given a Crime, RideHolder will now update the title TextView, date TextView, and solved CheckBox to reflect the state of the Crime.
-      mFromTextView.setText(mRide.getMstartRide());
+      mWhatTextView.setText(mRide.getMbikeName());
+      /*mFromTextView.setText(mRide.getMstartRide());
       mDateTextView.setText(mRide.getmStartddmmyyyy());
-      mStartTimeTextView.setText(mRide.getmStarthhmmss());
+      mStartTimeTextView.setText(mRide.getmStarthhmmss());*/
       //mEndTimeTextView.setText(mRide.getHhmmss());
     }
 
     @Override
     public void onClick(View v) {
         sharedRides.delete(mRide, getActivity());
+        //Chap 9
+        Toast.makeText(getActivity(), mRide.getMbikeName() + " clicked!", Toast.LENGTH_SHORT).show();
     }
   }
 
   private class RidesAdapter extends RecyclerView.Adapter<RideHolder> {
-    private List<Ride> mRides;
+    private List<RideMine> mRides;
 
-    public RidesAdapter(List<Ride> rides){
+    public RidesAdapter(List<RideMine> rides){
       mRides= rides;
     }
 
@@ -103,7 +113,7 @@ public class ListFragment extends Fragment implements Observer {
 
     @Override
     public void onBindViewHolder(RideHolder holder, int position) {
-      Ride ride= mRides.get(position);
+      RideMine ride= mRides.get(position);
       holder.bind(ride);
     }
 
@@ -138,8 +148,8 @@ public class ListFragment extends Fragment implements Observer {
 
   //Bogen siger den her er vigtig
   private void updateUI() {
-    RidesDB crimeLab = RidesDB.get(getActivity());
-    List<Ride> crimes = crimeLab.getRidesDB();
+    MyRidesDB crimeLab = MyRidesDB.get(getActivity());
+    List<RideMine> crimes = crimeLab.getRidesDB();
     mAdapter = new RidesAdapter(crimes);
     mCrimeRecyclerView.setAdapter(mAdapter);
   }

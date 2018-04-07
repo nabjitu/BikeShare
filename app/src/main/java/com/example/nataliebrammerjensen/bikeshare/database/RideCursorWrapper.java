@@ -2,8 +2,7 @@ package com.example.nataliebrammerjensen.bikeshare.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
-
-import com.example.nataliebrammerjensen.bikeshare.Ride;
+import com.example.nataliebrammerjensen.bikeshare.RideMine;
 
 import java.util.UUID;
 
@@ -17,13 +16,13 @@ public class RideCursorWrapper extends CursorWrapper {
     super(cursor);
     }
 
-    public Ride getCrime() {
+    public RideMine getCrime() {
         String uuidString = getString(getColumnIndex(RideDBSchema.RideTable.Cols.UUID));
         String bikeName = getString(getColumnIndex(RideDBSchema.RideTable.Cols.BIKENAME));
         String start = getString(getColumnIndex(RideDBSchema.RideTable.Cols.START));
         String stop = getString(getColumnIndex(RideDBSchema.RideTable.Cols.STOP));
 
-        Ride ride = new Ride(UUID.fromString(uuidString));
+        RideMine ride = new RideMine(UUID.fromString(uuidString));
         ride.setMbikeName(bikeName);
         ride.setMstartRide(start);
         ride.setMendRide(stop);
